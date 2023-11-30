@@ -1,0 +1,17 @@
+{
+  "name": "fs-db-qap3--ed",
+  "version": "1.0.0",
+  "description": "Fullstack/Database QAP3 - Evan Davies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evan Davies",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "method-override": "^3.0.0",
+    "pg": "^8.11.3"
+  }
+}
