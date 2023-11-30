@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 
+// Maybe put in a separate file. Refer to Peter's lectures.
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
