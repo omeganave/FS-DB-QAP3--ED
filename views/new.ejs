@@ -3,11 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>New Post</title>
+        <title><%= pageTitle %></title>
     </head>
     <body>
-        <h1>New Post</h1>
-        <form action="/posts" method="POST">
+        <%- include('partials/navbar.ejs') %>
+        <h1><%= pageTitle %></h1>
+        <form action="/api/posts" method="POST">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
             <br>
@@ -16,5 +17,6 @@
             <br>
             <button type="submit">Create Post</button>
         </form>
+        <a href="/">[Back to Post List]</a>
     </body>
 </html>

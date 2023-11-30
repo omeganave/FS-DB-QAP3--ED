@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Post</title>
+        <title><%= pageTitle %></title>
     </head>
     <body>
-        <h1>Edit Post</h1>
+        <%- include('partials/navbar.ejs') %>
+        <h1><%= pageTitle %></h1>
         <form action="/posts/<%= post.post_id %>?_method=PUT" method="POST">
             <label for="title">Title</label>
             <input type="text" name="title" id="title" value="<%= post.title %>">

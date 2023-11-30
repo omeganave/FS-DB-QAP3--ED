@@ -3,14 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Post List</title>
+        <title><%= pageTitle %></title>
     </head>
     <body>
-        <h1>Post List</h1>
+        <%- include('partials/navbar.ejs') %>
+        <h1><%= pageTitle %></h1>
         <ul>
             <% posts.forEach(post => { %>
                 <li>
-                    <a href="/posts/<%= post.id %>"><%= post.title %></a>
+                    <a href="/posts/<%= post.post_id %>"><%= post.title %></a>
                 </li>
             <% }) %>
         </ul>

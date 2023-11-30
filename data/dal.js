@@ -18,10 +18,19 @@ const getPostById = async (post_id) => {
     return rows[0];
 }
 
+const createPost = async ({ title, content }) => {
+    const query = 'INSERT INTO posts (title, content) VALUES ($1, $2) RETURNING *';
+    const values = [title, content];
+
+    const { rows } = await pool.query(query, values);
+    return rows[0];
+}
+
 // Add other methods here...
 
 module.exports = {
     getAllPosts,
-    getPostById
+    getPostById,
+    createPost,
     // Add other methods here...
 }
