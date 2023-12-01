@@ -3,11 +3,12 @@
 <%- include('partials/header.ejs') %>
         <%- include('partials/navbar.ejs') %>
         <%- include('partials/titleHeading.ejs') %>
-        <ul>
+        <div class="post-list-container">
             <% posts.forEach(post => { %>
-                <li>
-                    <a href="/posts/<%= post.post_id %>"><%= post.title %></a>
-                </li>
+                <div class="post-container">
+                    <a href="/posts/<%= post.post_id %>" class="list-post"><%= post.title %></a>
+                    <span></span>
+                </div>
             <% }) %>
-        </ul>
-    <%- include('partials/footer.ejs') %>
+        </div>
+<%- include('partials/footer.ejs') %>
