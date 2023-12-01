@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><%= pageTitle %></title>
-    </head>
-    <body>
+<%- include('partials/header.ejs') %>
         <%- include('partials/navbar.ejs') %>
-        <h1><%= pageTitle %></h1>
+        <%- include('partials/titleHeading.ejs') %>
         <form action="/posts/<%= post.post_id %>?_method=PUT" method="POST">
             <!-- <input type="hidden" name="_method" value="PUT"> -->
             <label for="title">Title</label>
@@ -19,5 +12,4 @@
             <button type="submit">Update Post</button>
         </form>
         <a href="/posts/<%= post.post_id %>">Cancel</a>
-    </body>
-</html>
+    <%- include('partials/footer.ejs') %>

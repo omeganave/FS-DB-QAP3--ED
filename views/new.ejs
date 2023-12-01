@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><%= pageTitle %></title>
-    </head>
-    <body>
+<%- include('partials/header.ejs') %>
         <%- include('partials/navbar.ejs') %>
-        <h1><%= pageTitle %></h1>
+        <%- include('partials/titleHeading.ejs') %>
         <form action="/api/posts" method="POST">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
@@ -18,5 +11,4 @@
             <button type="submit">Create Post</button>
         </form>
         <a href="/">[Back to Post List]</a>
-    </body>
-</html>
+    <%- include('partials/footer.ejs') %>

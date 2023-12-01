@@ -37,7 +37,16 @@ const updatePost = async (post_id, { title, content }) => {
     const { rows } = await pool.query(query, values);
 
     return rows[0];
-}
+};
+
+const deletePost = async (post_id) => {
+    const query = 'DELETE FROM posts WHERE post_id = $1 RETURNING *';
+    const values = [post_id];
+
+    const { rows } = await pool.query(query, values);
+
+    return rows[0];
+};
 
 // Add other methods here...
 
@@ -46,5 +55,6 @@ module.exports = {
     getPostById,
     createPost,
     updatePost,
+    deletePost,
     // Add other methods here...
 }

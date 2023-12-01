@@ -46,6 +46,29 @@ router.put('/posts/:id', async (req, res) => {
     res.redirect(`/posts/${updatedPost.post_id}`);
 });
 
+router.get('/posts/:id/delete', async (req, res) => {
+    const postId = req.params.id;
+    const post = await dal.getPostById(postId);
+
+    if (!post) {
+        return res.status(404).send('Post not found');
+    }
+
+    res.render('delete', { post, pageTitle: 'Delete Post', currentPage: 'Delete Post' });
+});
+
+router.delete('/posts/:id', async (req, res) => {
+    const postId = req.params.id;
+
+    const deletedPost = await dal.deletePost(postId);
+
+    if (!deletedPost) {
+        return res.status(404).send('Post not found');
+    }
+
+    res.redirect('/');
+})
+
 // router.patch('/posts/:id', async (req, res) => {
 //     await handlePostUpdate(req, res);
 // });

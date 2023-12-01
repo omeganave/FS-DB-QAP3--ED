@@ -39,6 +39,18 @@ router.put('/posts/:id', async (req, res) => {
     res.json(updatedPost);
 });
 
+router.delete('/posts/:id', async (req, res) => {
+    const postId = req.params.id;
+
+    const deletedPost = await dal.deletePost(postId);
+
+    if (!deletedPost) {
+        return res.status(404).send('Post not found');
+    }
+
+    res.json(deletedPost);
+})
+
 // router.patch('/posts/:id', async (req, res) => {
 //     await handlePostUpdate(req, res);
 // });

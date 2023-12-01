@@ -1,0 +1,26 @@
+.navbar {
+    background-color: rgb(94, 134, 230);
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: beige;
+}
+
+.navlink {
+    color: white;
+    text-decoration: none;
+}
+
+.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
