@@ -9,13 +9,15 @@
         <%- include('partials/navbar.ejs') %>
         <h1><%= pageTitle %></h1>
         <form action="/posts/<%= post.post_id %>?_method=PUT" method="POST">
+            <!-- <input type="hidden" name="_method" value="PUT"> -->
             <label for="title">Title</label>
             <input type="text" name="title" id="title" value="<%= post.title %>">
             <br>
-            <label for="body">Body</label>
+            <label for="content">Content</label>
             <textarea name="content" id="content" rows="4" required><%= post.content %></textarea>
             <br>
             <button type="submit">Update Post</button>
         </form>
+        <a href="/posts/<%= post.post_id %>">Cancel</a>
     </body>
 </html>

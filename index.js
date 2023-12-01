@@ -1,5 +1,6 @@
 const express = require('express');
 const methodOverride = require('method-override');
+const morgan = require('morgan');
 const app = express();
 const port = 3000;
 
@@ -11,6 +12,7 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+app.use(morgan('dev'));
 app.use(methodOverride('_method'));
 
 const apiRoutes = require('./routes/apiRoutes');

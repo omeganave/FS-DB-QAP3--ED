@@ -12,18 +12,30 @@ const pool = new Pool({
 const getAllPosts = async () => {
     const { rows } = await pool.query('SELECT * FROM posts');
     return rows;
-}
+};
 
 const getPostById = async (post_id) => {
     const { rows } = await pool.query('SELECT * FROM posts WHERE post_id = $1', [post_id]);
     return rows[0];
-}
+};
 
 const createPost = async ({ title, content }) => {
     const query = 'INSERT INTO posts (title, content) VALUES ($1, $2) RETURNING *';
     const values = [title, content];
 
     const { rows } = await pool.query(query, values);
+    return rows[0];
+};
+
+const updatePost = async (post_id, { title, content }) => {
+    const query = 'UPDATE posts SET title = $1, content = $2, updated_on =  CURRENT_TIMESTAMP WHERE post_id = $3 RETURNING *';
+    const values = [title, content, post_id];
+
+    console.log("Query: ", query);
+    console.log("Values: ", values);
+
+    const { rows } = await pool.query(query, values);
+
     return rows[0];
 }
 
@@ -33,5 +45,6 @@ module.exports = {
     getAllPosts,
     getPostById,
     createPost,
+    updatePost,
     // Add other methods here...
 }
