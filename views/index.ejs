@@ -3,11 +3,22 @@
 <%- include('partials/header.ejs') %>
         <%- include('partials/navbar.ejs') %>
         <%- include('partials/titleHeading.ejs') %>
+
+        <% function getCategoryName(category_id) { %>
+            <% const category = categories.find(category => category.category_id === category_id); %>
+            <% return category ? category.category_name : 'Uncategorized'; %>
+        <% } %>
+        <% function getDisplayDate(created_on, updated_on) { %>
+            <% const displayDate = updated_on || created_on; %>
+            <% return new Date(displayDate).toLocaleString(); %>
+        <% } %>
+        <% function isUpdated(updated_on, created_on) { %>
+            <% return updated_on >created_on; %>
+        <% } %>
         <div class="post-list-container">
             <% posts.forEach(post => { %>
                 <div class="post-container">
-                    <a href="/posts/<%= post.post_id %>" class="list-post"><%= post.title %></a>
-                    <span></span>
+                    <a href="/posts/<%= post.post_id %>" class="list-post"><%= post.title %></a> - <span><%= getCategoryName(post.category_id) %></span> -  <span><%= getDisplayDate(post.created_on, post.updated_on) %></span><span><%= isUpdated(post.updated_on, post.created_on) ? ' (Updated)' : '' %></span>
                 </div>
             <% }) %>
         </div>

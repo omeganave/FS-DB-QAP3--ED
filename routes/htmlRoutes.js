@@ -4,7 +4,8 @@ const dal = require('../data/dal');
 
 router.get('/', async (req, res) => {
     const posts = await dal.getAllPosts();
-    res.render('index', { posts, pageTitle: 'Post List', currentPage: 'Post List' });
+    const categories = await dal.getAllCategories();
+    res.render('index', { posts, categories, pageTitle: 'Post List', currentPage: 'Post List' });
 });
 
 router.get('/posts/:id', async (req, res) => {
