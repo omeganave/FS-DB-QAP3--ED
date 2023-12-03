@@ -8,6 +8,16 @@
             <label for="content">Content:</label>
             <textarea id="content" name="content" rows="4" required></textarea>
             <br>
+            <label for="existingCategory">Select Category:</label>
+            <select name="existingCategory" id="existingCategory">
+                <% categories.forEach(category => { %>
+                    <option value="<%= category.category_id %>"><%= category.category_name %></option>
+                <% }) %>
+            </select>
+            <br>
+            <label for="newCategory">Create New Category:</label>
+            <input type="text" id="newCategory" name="newCategory">
+            <br>
             <button type="submit">Create Post</button>
         </form>
         <a href="/">[Back to Post List]</a>

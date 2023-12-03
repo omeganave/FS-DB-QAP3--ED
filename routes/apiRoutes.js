@@ -14,10 +14,17 @@ router.get('/posts/:id', async (req, res) => {
 
 router.post('/posts', async (req, res) => {
     try {
-        const { title, content } = req.body;
-        console.log("Recieved data: ", title, content);
-        const newPost = await dal.createPost({ title, content });
-        console.log("Created post: ", newPost);
+        const { title, content, existingCategory, newCategory } = req.body;
+        let categoryId;
+        if (newCategory) {
+            const newCategoryId = await dal.createCategory({ category_name: newCategory });
+            categoryId = newCategoryId;
+        } else {
+            categoryId = existingCategory;
+        }
+        // console.log("Recieved data: ", title, content);
+        const newPost = await dal.createPost({ title, content, category_id: categoryId });
+        // console.log("Created post: ", newPost);
         res.redirect(`/posts/${newPost.post_id}`);
     } catch (error) {
         console.log("Error creating post: ", error);

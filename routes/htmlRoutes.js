@@ -16,8 +16,15 @@ router.get('/posts/:id', async (req, res) => {
     res.render('show', { post, pageTitle: post.title, currentPage: 'Post Details' });
 });
 
-router.get('/new', (req, res) => {
-    res.render('new', { pageTitle: 'Create a New Post', currentPage: 'Create a New Post' });
+router.get('/new', async (req, res) => {
+    // res.render('new', { pageTitle: 'Create a New Post', currentPage: 'Create a New Post' });
+    try {
+        const categories = await dal.getAllCategories();
+        res.render('new', { categories, pageTitle: 'Create a New Post', currentPage: 'Create a New Post' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 router.get('/posts/:id/edit', async (req, res) => {

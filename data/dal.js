@@ -19,9 +19,9 @@ const getPostById = async (post_id) => {
     return rows[0];
 };
 
-const createPost = async ({ title, content }) => {
-    const query = 'INSERT INTO posts (title, content) VALUES ($1, $2) RETURNING *';
-    const values = [title, content];
+const createPost = async ({ title, content, category_id }) => {
+    const query = 'INSERT INTO posts (title, content, category_id) VALUES ($1, $2, $3) RETURNING *';
+    const values = [title, content, category_id];
 
     const { rows } = await pool.query(query, values);
     return rows[0];
@@ -48,6 +48,19 @@ const deletePost = async (post_id) => {
     return rows[0];
 };
 
+const createCategory = async ({ category_name }) => {
+    const query = 'INSERT INTO categories (category_name) VALUES ($1) RETURNING category_id';
+    const values = [category_name];
+
+    const { rows } = await pool.query(query, values);
+    return rows[0].category_id;
+};
+
+const getAllCategories = async () => {
+    const { rows } = await pool.query('SELECT * FROM categories');
+    return rows;
+}
+
 // Add other methods here...
 
 module.exports = {
@@ -56,5 +69,7 @@ module.exports = {
     createPost,
     updatePost,
     deletePost,
+    createCategory,
+    getAllCategories,
     // Add other methods here...
 }
