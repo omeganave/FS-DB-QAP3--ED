@@ -3,9 +3,15 @@ const router = express.Router();
 const dal = require('../data/dal');
 
 router.get('/', async (req, res) => {
-    const posts = await dal.getAllPosts();
-    const categories = await dal.getAllCategories();
-    res.render('index', { posts, categories, pageTitle: 'Post List', currentPage: 'Post List' });
+    try {
+        const sortOption = req.query.sort || 'updated_on';
+        const posts = await dal.getAllPosts(sortOption);
+        const categories = await dal.getAllCategories();
+        res.render('index', { posts, categories, pageTitle: 'Post List', currentPage: 'Post List' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 router.get('/posts/:id', async (req, res) => {

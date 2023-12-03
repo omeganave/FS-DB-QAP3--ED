@@ -4,10 +4,6 @@
         <%- include('partials/navbar.ejs') %>
         <%- include('partials/titleHeading.ejs') %>
 
-        <% function getCategoryName(category_id) { %>
-            <% const category = categories.find(category => category.category_id === category_id); %>
-            <% return category ? category.category_name : 'Uncategorized'; %>
-        <% } %>
         <% function getDisplayDate(created_on, updated_on) { %>
             <% const displayDate = updated_on || created_on; %>
             <% return new Date(displayDate).toLocaleString(); %>
@@ -15,10 +11,23 @@
         <% function isUpdated(updated_on, created_on) { %>
             <% return updated_on >created_on; %>
         <% } %>
+        <div class="sort-container">
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort" onchange="handleSortChange(this.value)">
+                <option value="updated_on">Last Updated</option>
+                <option value="title_asc">Title (A-Z)</option>
+                <option value="title_desc">Title (Z-A)</option>
+                <option value="category_asc">Category (A-Z)</option>
+                <option value="category_desc">Category (Z-A)</option>
+            </select>
+        </div>
+
+        <br>
+
         <div class="post-list-container">
             <% posts.forEach(post => { %>
                 <div class="post-container">
-                    <a href="/posts/<%= post.post_id %>" class="list-post"><%= post.title %></a> - <span><%= getCategoryName(post.category_id) %></span> -  <span><%= getDisplayDate(post.created_on, post.updated_on) %></span><span><%= isUpdated(post.updated_on, post.created_on) ? ' (Updated)' : '' %></span>
+                    <a href="/posts/<%= post.post_id %>" class="list-post"><%= post.title %></a> - <span><%= post.category_name ? post.category_name : 'Uncategorized' %></span> -  <span><%= getDisplayDate(post.created_on, post.updated_on) %></span><span><%= isUpdated(post.updated_on, post.created_on) ? ' (Updated)' : '' %></span>
                 </div>
             <% }) %>
         </div>

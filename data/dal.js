@@ -9,8 +9,33 @@ const pool = new Pool({
     port: 5432,
 });
 
-const getAllPosts = async () => {
-    const { rows } = await pool.query('SELECT * FROM posts');
+const getAllPosts = async (sortOption) => {
+    // const { rows } = await pool.query('SELECT * FROM posts');
+    // return rows;
+    let query = 'SELECT posts.*, categories.category_name FROM posts LEFT JOIN categories ON posts.category_id = categories.category_id';
+
+    switch (sortOption) {
+        case 'title_asc':
+            query += ' ORDER BY title ASC';
+            break;
+        case 'title_desc':
+            query += ' ORDER BY title DESC';
+            break;
+        case 'category_asc':
+            query += ' ORDER BY category_name ASC';
+            break;
+        case 'category_desc':
+            query += ' ORDER BY category_name DESC';
+            break;
+        case 'updated_on':
+            query += ' ORDER BY updated_on DESC';
+            break;
+        default:
+            query += ' ORDER BY updated_on DESC';
+            break;
+    }
+
+    const { rows } = await pool.query(query);
     return rows;
 };
 
