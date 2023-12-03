@@ -1,3 +1,5 @@
+<!-- Editing categories does not work! Figure out what the problem is!! -->
+
 <%- include('partials/header.ejs') %>
         <%- include('partials/navbar.ejs') %>
         <%- include('partials/titleHeading.ejs') %>
@@ -8,6 +10,18 @@
             <br>
             <label for="content">Content</label>
             <textarea name="content" id="content" rows="4" required><%= post.content %></textarea>
+            <br>
+            <label for="existingCategory">Category</label>
+            <select name="existingCategory" id="existingCategory">
+                <% categories.forEach(category => { %>
+                    <option value="<%= category.category_id %>" <%= category.category_id === post.category_id ? 'selected' : '' %>>
+                        <%= category.category_name %>
+                    </option>
+                <% }) %>
+            </select>
+            <br>
+            <label for="newCategory">New Category</label>
+            <input type="text" name="newCategory" id="newCategory">
             <br>
             <button type="submit">Update Post</button>
         </form>

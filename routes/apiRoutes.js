@@ -22,8 +22,10 @@ router.post('/posts', async (req, res) => {
         } else {
             categoryId = existingCategory;
         }
+        console.log("APIROUTES New Post Category ID: ", categoryId);
         // console.log("Recieved data: ", title, content);
         const newPost = await dal.createPost({ title, content, category_id: categoryId });
+        console.log("APIROUTES New Post: ", newPost);
         // console.log("Created post: ", newPost);
         res.redirect(`/posts/${newPost.post_id}`);
     } catch (error) {
@@ -35,9 +37,19 @@ router.post('/posts', async (req, res) => {
 router.put('/posts/:id', async (req, res) => {
     // await handlePostUpdate(req, res);
     const postId = req.params.id;
-    const { title, content } = req.body;
+    const { title, content, existingCategory, newCategory } = req.body;
 
-    const updatedPost = await dal.updatePost(postId, { title, content });
+    let categoryId;
+    if (newCategory) {
+        const newCategoryId = await dal.createCategory({ category_name: newCategory });
+        categoryId = newCategoryId;
+    } else {
+        categoryId = existingCategory;
+    }
+    console.log("APIROUTES Category ID: ", categoryId);
+
+    const updatedPost = await dal.updatePost(postId, { title, content, category_id: categoryId });
+    console.log("APIROUTES Updated Post: ", updatedPost);
 
     if (!updatedPost) {
         return res.status(404).send('Post not found');

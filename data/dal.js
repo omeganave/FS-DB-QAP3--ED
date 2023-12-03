@@ -52,9 +52,9 @@ const createPost = async ({ title, content, category_id }) => {
     return rows[0];
 };
 
-const updatePost = async (post_id, { title, content }) => {
-    const query = 'UPDATE posts SET title = $1, content = $2, updated_on =  CURRENT_TIMESTAMP WHERE post_id = $3 RETURNING *';
-    const values = [title, content, post_id];
+const updatePost = async (post_id, { title, content, category_id }) => {
+    const query = 'UPDATE posts SET title = $1, content = $2, category_id = $3, updated_on =  CURRENT_TIMESTAMP WHERE post_id = $4 RETURNING *';
+    const values = [title, content, category_id, post_id];
 
     console.log("Query: ", query);
     console.log("Values: ", values);

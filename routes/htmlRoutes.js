@@ -35,23 +35,38 @@ router.get('/new', async (req, res) => {
 });
 
 router.get('/posts/:id/edit', async (req, res) => {
-    const postId = req.params.id;
-    const post = await dal.getPostById(postId);
-
-    if (!post) {
-        return res.status(404).send('Post not found');
+    try {
+        const postId = req.params.id;
+        const post = await dal.getPostById(postId);
+        const categories = await dal.getAllCategories();
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+        res.render('edit', { post, categories, pageTitle: 'Edit Post', currentPage: 'Edit Post' });
+        console.log("Showing edit page for post: ", post);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
     }
-
-    res.render('edit', { post, pageTitle: 'Edit Post', currentPage: 'Edit Post' });
 });
 
 // Not sure if both PUT and PATCH are needed, but the project requirements say to use both PUT and PATCH.
 router.put('/posts/:id', async (req, res) => {
     // await handlePostUpdate(req, res);
     const postId = req.params.id;
-    const { title, content } = req.body;
+    const { title, content, existingCategory, newCategory } = req.body;
+    console.log("Received data: ", title, content, existingCategory, newCategory);
 
-    const updatedPost = await dal.updatePost(postId, { title, content });
+    let categoryId;
+    if (newCategory) {
+        const newCategoryId = await dal.createCategory({ category_name: newCategory });
+        categoryId = newCategoryId;
+    } else {
+        categoryId = existingCategory;
+    }
+    console.log("HTMLROUTES Category ID: ", categoryId);
+    const updatedPost = await dal.updatePost(postId, { title, content, category_id: categoryId });
+    console.log("HTMLROUTES Updated Post: ", updatedPost);
 
     if (!updatedPost) {
         return res.status(404).send('Post not found');
