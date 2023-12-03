@@ -6,10 +6,10 @@
         <form action="/posts/<%= post.post_id %>?_method=PUT" method="POST">
             <!-- <input type="hidden" name="_method" value="PUT"> -->
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" value="<%= post.title %>">
+            <input type="text" name="title" id="title" value="<%= post.title %>" required pattern=".{1,255}" title="Must be between 1 and 255 characters">
             <br>
             <label for="content">Content</label>
-            <textarea name="content" id="content" rows="4" required><%= post.content %></textarea>
+            <textarea name="content" id="content" rows="4" required maxlength="255" pattern=".{1,255}" title="Must be between 1 and 255 characters"><%= post.content %></textarea>
             <br>
             <label for="existingCategory">Category</label>
             <select name="existingCategory" id="existingCategory">

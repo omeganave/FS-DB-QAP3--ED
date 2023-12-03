@@ -5,10 +5,10 @@
         <%- include('partials/titleHeading.ejs') %>
         <form action="/api/posts" method="POST">
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
+            <input type="text" id="title" name="title" required pattern=".{1,255}" title="Must be between 1 and 255 characters long.">
             <br>
             <label for="content">Content:</label>
-            <textarea id="content" name="content" rows="4" required></textarea>
+            <textarea id="content" name="content" rows="4" required maxlength="255" pattern=".{1,255}" title="Must be between 1 and 255 characters long."></textarea>
             <br>
             <label for="existingCategory">Select Category:</label>
             <select name="existingCategory" id="existingCategory">
