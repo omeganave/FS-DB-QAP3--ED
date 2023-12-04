@@ -2,4 +2,11 @@
     <!-- Wanted to have this link to the post list with the proper sort option, couldn't figure out how to get it to work. -->
     <a class ="<%= currentPage === 'Post List' ? 'active' : 'navlink' %>" href="/">Post List</a>
     <a class = "<%= currentPage === 'Create a New Post' ? 'active' : 'navlink' %>" href="/new">Create a New Post</a>
+    <% if (!user) { %>
+        <a href="/signin" class="navlink">Sign In</a>
+        <a href="/register" class="navlink">Register</a></a>
+    <% } else { %>
+        <span>Welcome, <%= user.username %></span>
+        <a href="/signout" class="navlink">Sign Out</a>
+    <% } %>
 </nav>

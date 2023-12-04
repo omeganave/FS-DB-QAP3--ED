@@ -1,0 +1,12 @@
+<%- include('partials/header.ejs') %>
+    <%- include('partials/navbar.ejs') %>
+    <%- include('partials/titleHeading.ejs') %>
+    <form action="/signin" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+        <br>
+        <button type="submit">Sign In</button>
+    </form>
+    <br>
+    <a href="/register">[Don't have an account? Register!]</a>
+<%- include('partials/footer.ejs') %>

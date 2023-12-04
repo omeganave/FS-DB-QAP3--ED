@@ -27,7 +27,7 @@
         <div class="post-list-container">
             <% posts.forEach(post => { %>
                 <div class="post-container">
-                    <a href="/posts/<%= post.post_id %>" class="list-post"><%= post.title %></a> - <span><%= post.category_name ? post.category_name : 'Uncategorized' %></span> -  <span><%= getDisplayDate(post.created_on, post.updated_on) %></span><span><%= isUpdated(post.updated_on, post.created_on) ? ' (Updated)' : '' %></span>
+                    <span><%= post.username %></span> - <a href="/posts/<%= post.post_id %>" class="list-post"><%= post.title %></a> - <span><%= post.category_name ? post.category_name : 'Uncategorized' %></span> -  <span><%= getDisplayDate(post.created_on, post.updated_on) %></span> <span><%= isUpdated(post.updated_on, post.created_on) ? ' (Updated)' : '' %></span>
                 </div>
             <% }) %>
         </div>

@@ -14,7 +14,7 @@ const pool = new Pool({
 const getAllPosts = async (sortOption) => {
     // const { rows } = await pool.query('SELECT * FROM posts');
     // return rows;
-    let query = 'SELECT posts.*, categories.category_name FROM posts LEFT JOIN categories ON posts.category_id = categories.category_id';
+    let query = 'SELECT posts.*, categories.category_name, users.username FROM posts LEFT JOIN categories ON posts.category_id = categories.category_id LEFT JOIN users ON posts.user_id = users.user_id';
 
     switch (sortOption) {
         case 'title_asc':
@@ -42,13 +42,13 @@ const getAllPosts = async (sortOption) => {
 };
 
 const getPostById = async (post_id) => {
-    const { rows } = await pool.query('SELECT * FROM posts WHERE post_id = $1', [post_id]);
+    const { rows } = await pool.query('SELECT posts.*, categories.category_name, users.username FROM posts LEFT JOIN categories ON posts.category_id = categories.category_id LEFT JOIN users ON posts.user_id = users.user_id WHERE posts.post_id = $1', [post_id]);
     return rows[0];
 };
 
-const createPost = async ({ title, content, category_id }) => {
-    const query = 'INSERT INTO posts (title, content, category_id) VALUES ($1, $2, $3) RETURNING *';
-    const values = [title, content, category_id];
+const createPost = async ({ title, content, category_id, user_id }) => {
+    const query = 'INSERT INTO posts (title, content, category_id, user_id) VALUES ($1, $2, $3, $4) RETURNING *';
+    const values = [title, content, category_id, user_id];
 
     const { rows } = await pool.query(query, values);
     return rows[0];
@@ -86,6 +86,22 @@ const createCategory = async ({ category_name }) => {
 const getAllCategories = async () => {
     const { rows } = await pool.query('SELECT * FROM categories');
     return rows;
+};
+
+const createUser = async ({ username }) => {
+    const query = 'INSERT INTO users (username) VALUES ($1) RETURNING *';
+    const values = [username];
+
+    const { rows } = await pool.query(query, values);
+    return rows[0];
+};
+
+const getUserByUsername = async (username) => {
+    const query = 'SELECT * FROM users WHERE username = $1';
+    const values = [username];
+
+    const { rows } = await pool.query(query, values);
+    return rows[0];
 }
 
 // Add other methods here...
@@ -98,5 +114,7 @@ module.exports = {
     deletePost,
     createCategory,
     getAllCategories,
+    createUser,
+    getUserByUsername,
     // Add other methods here...
 }
