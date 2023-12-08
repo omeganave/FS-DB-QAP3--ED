@@ -1,20 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Post</title>
-    </head>
-    <body>
-        <h1>Edit Post</h1>
+<!-- Editing categories does not work! Figure out what the problem is!! -->
+
+<%- include('partials/header.ejs') %>
+        <%- include('partials/navbar.ejs') %>
+        <%- include('partials/titleHeading.ejs') %>
         <form action="/posts/<%= post.post_id %>?_method=PUT" method="POST">
+            <!-- <input type="hidden" name="_method" value="PUT"> -->
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" value="<%= post.title %>">
+            <input type="text" name="title" id="title" value="<%= post.title %>" required pattern=".{1,255}" title="Must be between 1 and 255 characters">
             <br>
-            <label for="body">Body</label>
-            <textarea name="content" id="content" rows="4" required><%= post.content %></textarea>
+            <label for="content">Content</label>
+            <textarea name="content" id="content" rows="4" required maxlength="255" pattern=".{1,255}" title="Must be between 1 and 255 characters"><%= post.content %></textarea>
+            <br>
+            <label for="existingCategory">Category</label>
+            <select name="existingCategory" id="existingCategory">
+                <% categories.forEach(category => { %>
+                    <option value="<%= category.category_id %>" <%= category.category_id === post.category_id ? 'selected' : '' %>>
+                        <%= category.category_name %>
+                    </option>
+                <% }) %>
+            </select>
+            <br>
+            <label for="newCategory">New Category</label>
+            <input type="text" name="newCategory" id="newCategory">
             <br>
             <button type="submit">Update Post</button>
         </form>
-    </body>
-</html>
+        <a href="/posts/<%= post.post_id %>">Cancel</a>
+    <%- include('partials/footer.ejs') %>

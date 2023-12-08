@@ -1,18 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Post List</title>
-    </head>
-    <body>
-        <h1>Post List</h1>
-        <ul>
+<!-- Add CSS stylings in the future! -->
+
+<%- include('partials/header.ejs') %>
+        <%- include('partials/navbar.ejs') %>
+        <%- include('partials/titleHeading.ejs') %>
+
+        <% function getDisplayDate(created_on, updated_on) { %>
+            <% const displayDate = updated_on || created_on; %>
+            <% return new Date(displayDate).toLocaleString(); %>
+        <% } %>
+        <% function isUpdated(updated_on, created_on) { %>
+            <% return updated_on >created_on; %>
+        <% } %>
+        <div class="sort-container">
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort" onchange="handleSortChange(this.value)">
+                <option value="updated_on">Last Updated</option>
+                <option value="title_asc">Title (A-Z)</option>
+                <option value="title_desc">Title (Z-A)</option>
+                <option value="category_asc">Category (A-Z)</option>
+                <option value="category_desc">Category (Z-A)</option>
+            </select>
+        </div>
+
+        <br>
+
+        <div class="post-list-container">
             <% posts.forEach(post => { %>
-                <li>
-                    <a href="/posts/<%= post.id %>"><%= post.title %></a>
-                </li>
+                <div class="post-container">
+                    <div class="pc-left">
+                        <span class="pl-username"><%= post.username %></span> - <a href="/posts/<%= post.post_id %>" class="list-post"><%= post.title %></a> - <span class="pl-category"><%= post.category_name ? post.category_name : 'Uncategorized' %></span>
+                    </div>
+                    <div class="pc-right">
+                        <span class="pl-updated"><%= isUpdated(post.updated_on, post.created_on) ? ' (Updated)' : '' %></span><span class="pl-date"><%= getDisplayDate(post.created_on, post.updated_on) %></span>
+                    </div>
+                    
+                </div>
             <% }) %>
-        </ul>
-    </body>
-</html>
+        </div>
+<%- include('partials/footer.ejs') %>
